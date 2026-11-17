@@ -1,0 +1,11 @@
+/result
+/result-*
+
+# Safety-specific ignores
+**/secrets*
+**/*.key
+**/*.pem
+**/.env
+**/*.env
+.ssh/
+.gnupg/
