@@ -49,6 +49,7 @@ in
     home.sessionVariables = {
       BROWSER = "brave";
       TERMINAL = "alacritty";
+      COLORTERM = "truecolor";
     };
 
     xdg.mimeApps = {
@@ -71,6 +72,62 @@ in
 
       # Identity and signing settings stay machine-local.
       includes = [ { path = "${config.xdg.configHome}/git/local"; } ];
+    };
+
+    ## ----- zsh -----------------------------------------------------------------
+    programs.zsh = {
+      enable = true;
+      autosuggestion.enable = true;
+      defaultKeymap = "viins";
+      history = {
+        path = "${config.home.homeDirectory}/.zsh_history";
+        size = 100000;
+        save = 100000;
+        share = true;
+        extended = true;
+        ignoreDups = true;
+        ignoreSpace = true;
+      };
+      historySubstringSearch = {
+        enable = true;
+        searchUpKey = [
+          "^[[A"
+          "^[OA"
+        ];
+        searchDownKey = [
+          "^[[B"
+          "^[OB"
+        ];
+      };
+    };
+
+    programs.starship = {
+      enable = true;
+      presets = [ "pure-preset" ];
+
+      settings = {
+        format = "$username$hostname\${custom.worktree}$directory$git_branch$git_state$git_status$cmd_duration$line_break$python$character";
+
+        custom.worktree = {
+          description = "parent of the repo root, when in a linked worktree";
+          require_repo = true;
+          when = true;
+          shell = [ "sh" ];
+          command = ''
+            git rev-parse --path-format=absolute \
+                --git-dir --git-common-dir --show-toplevel 2>/dev/null | {
+              read -r gitdir
+              read -r common
+              read -r top
+              [ "$gitdir" = "$common" ] && exit 0
+              parent=''${top%/*}
+              printf '%s/' "''${parent##*/}"
+            }
+          '';
+          format = "[$output]($style)";
+          style = "blue";
+        };
+      };
     };
 
     ## ----- alacritty -----------------------------------------------------------

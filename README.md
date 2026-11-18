@@ -2,7 +2,8 @@
 
 The home environment for `robots` on Aurora, applied with standalone
 [Home Manager](https://github.com/nix-community/home-manager). It installs
-Brave, Alacritty, and Git, and manages Noctalia's shared settings.
+Brave, Alacritty, Git, and zsh with starship, and manages Noctalia's shared
+settings.
 
 Aurora's [infra configuration](https://github.com/nullcopy/infra) provides
 Niri, Noctalia, Alacritty, audio, and the default Niri keybindings. This repo
