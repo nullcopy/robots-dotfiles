@@ -2,7 +2,7 @@
 
 The home environment for `robots` on Aurora, applied with standalone
 [Home Manager](https://github.com/nix-community/home-manager). It installs
-Brave, Git, and Neovim, and manages Noctalia's shared settings.
+Brave, Alacritty, and Git, and manages Noctalia's shared settings.
 
 Aurora's [infra configuration](https://github.com/nullcopy/infra) provides
 Niri, Noctalia, Alacritty, audio, and the default Niri keybindings. This repo
@@ -33,8 +33,8 @@ ln -sfn /path/to/robots-dotfiles ~/.config/dotfiles
 
 ## Git identity
 
-Git reads machine-local settings from `~/.config/git/local`. Set an identity
-there before making commits:
+Git reads machine-local settings from `~/.config/git/local`. Open it with
+an editor of your choice. Set an identity there before making commits:
 
 ```sh
 git config --file ~/.config/git/local user.name 'Your Name'

@@ -37,9 +37,19 @@ in
     '';
 
     ## ----- applications --------------------------------------------------------
-    home.packages = [ pkgs.brave ];
+    home.packages = with pkgs; [
+      brave
+      nerd-fonts.jetbrains-mono
+    ];
 
-    home.sessionVariables.BROWSER = "brave";
+    # Standalone home-manager needs this for home.packages fonts to be
+    # picked up by fontconfig.
+    fonts.fontconfig.enable = true;
+
+    home.sessionVariables = {
+      BROWSER = "brave";
+      TERMINAL = "alacritty";
+    };
 
     xdg.mimeApps = {
       enable = true;
@@ -56,7 +66,6 @@ in
     programs.git = {
       enable = true;
       settings = {
-        core.editor = "nvim";
         init.defaultBranch = "main";
       };
 
@@ -64,30 +73,14 @@ in
       includes = [ { path = "${config.xdg.configHome}/git/local"; } ];
     };
 
-    ## ----- neovim --------------------------------------------------------------
-    programs.neovim = {
+    ## ----- alacritty -----------------------------------------------------------
+    programs.alacritty = {
       enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-      withRuby = false;
-      withPython3 = false;
-      initLua = ''
-        vim.opt.number = true
-        vim.opt.expandtab = true
-        vim.opt.tabstop = 2
-        vim.opt.softtabstop = 2
-        vim.opt.shiftwidth = 2
-        vim.opt.smartindent = true
-        vim.opt.ignorecase = true
-        vim.opt.smartcase = true
-        vim.opt.cursorline = true
-        vim.opt.clipboard = "unnamedplus"
-        vim.opt.undofile = true
-        vim.opt.swapfile = false
-        vim.opt.splitbelow = true
-        vim.opt.splitright = true
-      '';
+      settings = {
+        font.normal.family = "JetBrainsMono Nerd Font";
+        window.decorations = "None";
+        window.opacity = 0.9;
+      };
     };
 
     ## ----- noctalia ------------------------------------------------------------
